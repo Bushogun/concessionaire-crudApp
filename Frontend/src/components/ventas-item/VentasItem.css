@@ -1,0 +1,31 @@
+.ventas-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+    
+  .ventas-item input[type="checkbox"] {
+    margin-right: 10px;
+  }
+    
+  .ventas-item button {
+    font-size: 23px;
+    border: none;
+    padding: 0;
+    cursor: pointer; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    margin-left: 10px;
+    color: rgb(157, 60, 60);
+    background: transparent;
+  }
+  
+  .ventas-item button:hover {
+    color: rgb(234, 40, 40);
+  }
+  
+  .ventas-text.completed {
+    text-decoration: line-through;
+    color: gray;
+  }
