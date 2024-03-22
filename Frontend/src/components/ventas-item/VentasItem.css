@@ -1,9 +1,24 @@
-.ventas-item {
+.ventas-title-item {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    padding: 10px 0px; 
+}
+
+.ventas-title-text {
+    padding: 20px 8px; 
+    background-color: #1b5e20;
+    font-weight: 500;
+    font-size: larger;
   }
-    
+  
+  .ventas-text{
+    font-size: small;
+    text-align: center;
+    color: #000;
+    background-color: aliceblue;
+    padding: 10px 20px;
+  }
   .ventas-item input[type="checkbox"] {
     margin-right: 10px;
   }
@@ -19,10 +34,6 @@
     margin-left: 10px;
     color: rgb(157, 60, 60);
     background: transparent;
-  }
-  
-  .ventas-item button:hover {
-    color: rgb(234, 40, 40);
   }
   
   .ventas-text.completed {

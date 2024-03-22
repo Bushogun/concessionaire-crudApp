@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { API_KEY, OPERATIONS_VENTAS } from '../../api';
 // import { setAddTask } from '../../redux/features/toDosSlice'; 
 // import { postTodo } from '../../utils/api-utils'; 
-// import { API_KEY, OPERATIONS_TODOS } from '../../Api'; 
 
 const styleInput = {
   p: 0.5,

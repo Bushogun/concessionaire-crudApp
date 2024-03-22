@@ -1,37 +1,42 @@
 import React from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { VentasItem } from '../ventas-item';
-import './VentasList.css'
+import './VentasList.css';
+import { IVentasValue } from '../../interfaces/i-ventas';
 
 export const VentasList = () => {
-  // const todos = useAppSelector(state => state.toDosReducer.toDos);
-  // const searchQuery = useAppSelector(state => state.toDosReducer.query);
-  // const filter = useAppSelector(state => state.toDosReducer.filter);
+  const ventas = useAppSelector(state => state.ventasReducer.ventas);
+  console.log(ventas);
 
-  // const filteredTodos = searchQuery 
-  //   ? todos.filter(todo => 
-  //       todo.title.toLowerCase().includes(searchQuery.toLowerCase())
-  //     )
-  //   : filter === 'COMPLETE' 
-  //     ? todos.filter(todo => todo.isComplete)
-  //     : filter === 'ACTIVE'
-  //       ? todos.filter(todo => !todo.isComplete)
-  //       : todos;
-
-  const handleChangeStatus = () => {
-    window.location.reload();
-  };
 
   return (
     <div className="ventas-list-container">
       <div className="ventas-list">
-        {/* {filteredTodos.map(todo => (
-          <TodoItem key={todo.id} todo={todo} changeStatus={handleChangeStatus} /> 
-        ))} */}
-
-        <VentasItem changeStatus={handleChangeStatus}>test</VentasItem>
-
+        <div className="ventas-title-item">
+          <table>
+            <thead>
+              <tr>
+                <th className={`ventas-title-text`}>Cliente</th>
+                <th className={`ventas-title-text`}>Concesionario</th>
+                <th className={`ventas-title-text`}>Vehículo</th>
+                <th className={`ventas-title-text`}>Fecha</th>
+                <th className={`ventas-title-text`}>Valor</th>
+                <th className={`ventas-title-text`}>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ventas.map((venta: IVentasValue) => (
+                <VentasItem
+                  key={venta.$id}
+                  data={venta}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 };
+
+export default VentasList;
