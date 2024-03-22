@@ -21,7 +21,13 @@ export const fetchVentas = async (dispatch: AppDispatch, requestVentas: string) 
   return fetchData(requestVentas, dispatch);
 };
 
-export const postVenta = async (dispatch: AppDispatch, requestVentas: string, ventasInput: { vehiculoId: number, nombreCliente: String, nombreConcesionario: String, precioVenta: number }) => {
+export const postVenta = async (dispatch: AppDispatch, requestVentas: string, ventasInput: { vehiculoId: number, clienteId: number, concesionarioId: number, precioVenta: number }) => {
+
+  const url = new URL(requestVentas);
+  url.searchParams.append('vehiculoId', ventasInput.vehiculoId.toString());
+  url.searchParams.append('clienteId', ventasInput.clienteId.toString());
+  url.searchParams.append('concesionarioId', ventasInput.concesionarioId.toString());
+  url.searchParams.append('precioVenta', ventasInput.precioVenta.toString());
   const options: RequestInit = {
     method: 'POST',
     headers: {
@@ -30,7 +36,7 @@ export const postVenta = async (dispatch: AppDispatch, requestVentas: string, ve
     body: JSON.stringify(ventasInput)
   };
 
-  return fetchData(requestVentas, dispatch, options);
+  return fetchData(url.toString(), dispatch, options);
 };
 
 export const updateTodoStatus = async (dispatch: AppDispatch, requestUrl: string, id: number,) => {

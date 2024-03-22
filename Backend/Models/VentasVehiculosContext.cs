@@ -24,7 +24,6 @@ public partial class VentasVehiculosContext : DbContext
     public virtual DbSet<Vehiculo> Vehiculos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=MINOTAURO\\SQLEXPRESS; DataBase=VentasVehiculos; Integrated Security=true; TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,7 +57,7 @@ public partial class VentasVehiculosContext : DbContext
             entity.HasKey(e => e.TransaccionId).HasName("PK__Transacc__86A849DE41277288");
 
             entity.Property(e => e.TransaccionId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd() 
                 .HasColumnName("TransaccionID");
             entity.Property(e => e.ClienteId).HasColumnName("ClienteID");
             entity.Property(e => e.ConcesionarioId).HasColumnName("ConcesionarioID");
