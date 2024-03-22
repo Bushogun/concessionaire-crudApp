@@ -1,4 +1,4 @@
-﻿﻿# To Do full Stack App
+﻿﻿# Ventas Vehiculos full Stack App
 
 In this repository you will find an SQL file with a query which describes the databse solution, .Net application and a REACT project that performs filtering and information display operations
 Before starting you must check if you have a node version equal to or greater than 16 (do it with the "node -v" command) and an npm version equal to or greater than 9 (do it with the "npm -v" command)
