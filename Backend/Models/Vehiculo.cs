@@ -15,5 +15,9 @@ public partial class Vehiculo
 
     public decimal? Precio { get; set; }
 
-    public virtual ICollection<Transaccione> Transacciones { get; set; } = new List<Transaccione>();
+    public int? ConcesionarioId { get; set; }
+
+    public virtual Concesionario? Concesionario { get; set; }
+
+    public virtual Transaccione? Transaccione { get; set; }
 }

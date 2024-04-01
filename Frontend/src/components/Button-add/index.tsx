@@ -4,9 +4,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import { API_KEY, OPERATIONS_VENTAS } from '../../api';
-// import { setAddTask } from '../../redux/features/toDosSlice'; 
 import { postVenta } from '../../utils/api-utils';
 import { setTransactions } from '../../redux/features/ventas-slice';
 
@@ -37,18 +36,18 @@ const addButtonStyle = {
 
 export default function ButtonAdd() {
   const [open, setOpen] = React.useState(false);
-  const [vehiculoIDInput, setVehiculoIDInput] = React.useState(0);
-  const [clienteIDInput, setClienteIDInput] = React.useState(0);
-  const [concesionarioIDInput, setConcesionarioIDInput] = React.useState(0);
-  const [precioVentaInput, setPrecioVentaInput] = React.useState(0);
+  const [vehiculoIDInput, setVehiculoIDInput] = React.useState('');
+  const [clienteIDInput, setClienteIDInput] = React.useState('');
+  const [concesionarioIDInput, setConcesionarioIDInput] = React.useState('');
+  const [precioVentaInput, setPrecioVentaInput] = React.useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const dispatch = useAppDispatch();
 
   const handleAddClick = async () => {
     try {
-      await postVenta(dispatch, API_KEY + OPERATIONS_VENTAS, { vehiculoId: vehiculoIDInput, clienteId: clienteIDInput, concesionarioId: concesionarioIDInput, precioVenta: precioVentaInput });
-      dispatch(setTransactions({ vehiculoId: vehiculoIDInput, clienteId: clienteIDInput, concesionarioId: concesionarioIDInput, precioVenta: precioVentaInput }));
+      await postVenta(dispatch, API_KEY + OPERATIONS_VENTAS, { vehiculoId: parseInt(vehiculoIDInput), clienteId: parseInt(clienteIDInput), precioVenta: parseFloat(precioVentaInput) });
+      dispatch(setTransactions({ vehiculoId: parseInt(vehiculoIDInput), clienteId: parseInt(clienteIDInput), concesionarioId: parseInt(concesionarioIDInput), precioVenta: parseFloat(precioVentaInput) }));
       handleClose();
     } catch (error) {
       console.error('Error al agregar la venta:', error);
@@ -78,7 +77,8 @@ export default function ButtonAdd() {
             fullWidth
             variant="outlined"
             value={vehiculoIDInput}
-            onChange={(e) => setVehiculoIDInput(parseInt(e.target.value))}
+            onChange={(e) => setVehiculoIDInput(e.target.value.replace(/\D/, ''))}
+            inputProps={{ inputMode: 'numeric' }}
           />
           <TextField
             sx={styleInput}
@@ -87,18 +87,9 @@ export default function ButtonAdd() {
             fullWidth
             variant="outlined"
             value={clienteIDInput}
-            onChange={(e) => setClienteIDInput(parseInt(e.target.value))}
+            onChange={(e) => setClienteIDInput(e.target.value.replace(/\D/, ''))}
+            inputProps={{ inputMode: 'numeric' }}
           />
-          <TextField
-            sx={styleInput}
-            id="ConcesionarioID-input"
-            label="ConcesionarioID"
-            fullWidth
-            variant="outlined"
-            value={concesionarioIDInput}
-            onChange={(e) => setConcesionarioIDInput(parseInt(e.target.value))}
-          />
-
           <TextField
             sx={styleInput}
             id="PrecioVenta-input"
@@ -106,7 +97,8 @@ export default function ButtonAdd() {
             fullWidth
             variant="outlined"
             value={precioVentaInput}
-            onChange={(e) => setPrecioVentaInput(parseFloat(e.target.value))}
+            onChange={(e) => setPrecioVentaInput(e.target.value.replace(/[^\d.]/, ''))}
+            inputProps={{ inputMode: 'numeric' }}
           />
 
           <Button sx={{ mt: 2 }} variant="contained" color="success" onClick={handleAddClick}>

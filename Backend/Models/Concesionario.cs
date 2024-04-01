@@ -13,5 +13,5 @@ public partial class Concesionario
 
     public string? Ciudad { get; set; }
 
-    public virtual ICollection<Transaccione> Transacciones { get; set; } = new List<Transaccione>();
+    public virtual ICollection<Vehiculo> Vehiculos { get; set; } = new List<Vehiculo>();
 }

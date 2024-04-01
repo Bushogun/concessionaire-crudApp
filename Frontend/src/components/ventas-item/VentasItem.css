@@ -40,3 +40,15 @@
     text-decoration: line-through;
     color: gray;
   }
+
+  .ventas-text button {
+    border: none;
+    background-color: transparent;
+    color: #1b5e20;
+  }
+  
+  .ventas-text button:hover {
+    text-decoration: none;
+    text-decoration: underline;
+    color: #009;
+  }

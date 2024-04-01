@@ -1,6 +1,14 @@
+import { Vehiculo } from './i-ventas';
 export interface IVentas {
+    cliente: any;
     $id: string;
     $values: IVentasValue[];
+}
+
+export interface IEditTransactions {
+    vehiculoId: number,
+    clienteId: number,
+    precioVenta: number
 }
 
 export interface IVentasValue {

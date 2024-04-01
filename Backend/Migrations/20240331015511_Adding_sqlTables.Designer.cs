@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(VentasVehiculosContext))]
-    [Migration("20240322030325_Add_Ventas3")]
-    partial class Add_Ventas3
+    [Migration("20240331015511_Adding_sqlTables")]
+    partial class Adding_sqlTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("ClienteId")
-                        .HasName("PK__Clientes__71ABD0A7CC0121A9");
+                        .HasName("PK__Clientes__71ABD0A71631344F");
 
                     b.ToTable("Clientes");
                 });
@@ -68,7 +68,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("ConcesionarioId")
-                        .HasName("PK__Concesio__CFF65D10380DF6EE");
+                        .HasName("PK__Concesio__CFF65D10543D01CC");
 
                     b.ToTable("Concesionarios");
                 });
@@ -76,16 +76,15 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Models.Transaccione", b =>
                 {
                     b.Property<int>("TransaccionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TransaccionID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransaccionId"));
 
                     b.Property<int?>("ClienteId")
                         .HasColumnType("int")
                         .HasColumnName("ClienteID");
-
-                    b.Property<int?>("ConcesionarioId")
-                        .HasColumnType("int")
-                        .HasColumnName("ConcesionarioID");
 
                     b.Property<DateTime?>("FechaVenta")
                         .HasColumnType("datetime");
@@ -98,13 +97,13 @@ namespace Backend.Migrations
                         .HasColumnName("VehiculoID");
 
                     b.HasKey("TransaccionId")
-                        .HasName("PK__Transacc__86A849DE41277288");
+                        .HasName("PK__Transacc__86A849DECBBD3BC0");
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("ConcesionarioId");
-
-                    b.HasIndex("VehiculoId");
+                    b.HasIndex(new[] { "VehiculoId" }, "UQ__Transacc__AA08862182B70625")
+                        .IsUnique()
+                        .HasFilter("[VehiculoID] IS NOT NULL");
 
                     b.ToTable("Transacciones");
                 });
@@ -118,6 +117,10 @@ namespace Backend.Migrations
                     b.Property<int?>("Anio")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ConcesionarioId")
+                        .HasColumnType("int")
+                        .HasColumnName("ConcesionarioID");
+
                     b.Property<string>("Marca")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -130,7 +133,9 @@ namespace Backend.Migrations
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("VehiculoId")
-                        .HasName("PK__Vehiculo__AA088620750440D2");
+                        .HasName("PK__Vehiculo__AA08862047037CFC");
+
+                    b.HasIndex("ConcesionarioId");
 
                     b.ToTable("Vehiculos");
                 });
@@ -140,23 +145,26 @@ namespace Backend.Migrations
                     b.HasOne("Backend.Models.Cliente", "Cliente")
                         .WithMany("Transacciones")
                         .HasForeignKey("ClienteId")
-                        .HasConstraintName("FK__Transacci__Clien__690797E6");
-
-                    b.HasOne("Backend.Models.Concesionario", "Concesionario")
-                        .WithMany("Transacciones")
-                        .HasForeignKey("ConcesionarioId")
-                        .HasConstraintName("FK__Transacci__Conce__69FBBC1F");
+                        .HasConstraintName("FK__Transacci__Clien__2116E6DF");
 
                     b.HasOne("Backend.Models.Vehiculo", "Vehiculo")
-                        .WithMany("Transacciones")
-                        .HasForeignKey("VehiculoId")
-                        .HasConstraintName("FK__Transacci__Vehic__681373AD");
+                        .WithOne("Transaccione")
+                        .HasForeignKey("Backend.Models.Transaccione", "VehiculoId")
+                        .HasConstraintName("FK__Transacci__Vehic__2022C2A6");
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("Concesionario");
-
                     b.Navigation("Vehiculo");
+                });
+
+            modelBuilder.Entity("Backend.Models.Vehiculo", b =>
+                {
+                    b.HasOne("Backend.Models.Concesionario", "Concesionario")
+                        .WithMany("Vehiculos")
+                        .HasForeignKey("ConcesionarioId")
+                        .HasConstraintName("FK__Vehiculos__Conce__1A69E950");
+
+                    b.Navigation("Concesionario");
                 });
 
             modelBuilder.Entity("Backend.Models.Cliente", b =>
@@ -166,12 +174,12 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Models.Concesionario", b =>
                 {
-                    b.Navigation("Transacciones");
+                    b.Navigation("Vehiculos");
                 });
 
             modelBuilder.Entity("Backend.Models.Vehiculo", b =>
                 {
-                    b.Navigation("Transacciones");
+                    b.Navigation("Transaccione");
                 });
 #pragma warning restore 612, 618
         }

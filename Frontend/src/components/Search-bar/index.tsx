@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setSearchQuery } from '../../redux/features/ventas-slice';
 import './search-bar.css';
 
-interface SearchBoxProps {}
+interface SearchBoxProps { }
 
 export const SearchBox: React.FC<SearchBoxProps> = () => {
     const dispatch = useDispatch();
@@ -13,18 +13,18 @@ export const SearchBox: React.FC<SearchBoxProps> = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setQuery(value);
-        dispatch(setSearchQuery(value)); 
+        dispatch(setSearchQuery(value));
     };
 
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    // };
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    };
 
     return (
         <form
             aria-label="form-search"
             className="container-form"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
         >
             <div className="input-group">
                 <input
@@ -32,7 +32,7 @@ export const SearchBox: React.FC<SearchBoxProps> = () => {
                     autoFocus
                     className="form-control"
                     name="search"
-                    placeholder="Search"
+                    placeholder="Search By Name"
                     value={query}
                     onChange={handleChange}
                 />

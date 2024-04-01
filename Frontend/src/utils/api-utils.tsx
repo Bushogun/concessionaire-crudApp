@@ -21,12 +21,11 @@ export const fetchVentas = async (dispatch: AppDispatch, requestVentas: string) 
   return fetchData(requestVentas, dispatch);
 };
 
-export const postVenta = async (dispatch: AppDispatch, requestVentas: string, ventasInput: { vehiculoId: number, clienteId: number, concesionarioId: number, precioVenta: number }) => {
+export const postVenta = async (dispatch: AppDispatch, requestVentas: string, ventasInput: { vehiculoId: number, clienteId: number, precioVenta: number }) => {
 
   const url = new URL(requestVentas);
   url.searchParams.append('vehiculoId', ventasInput.vehiculoId.toString());
   url.searchParams.append('clienteId', ventasInput.clienteId.toString());
-  url.searchParams.append('concesionarioId', ventasInput.concesionarioId.toString());
   url.searchParams.append('precioVenta', ventasInput.precioVenta.toString());
   const options: RequestInit = {
     method: 'POST',
@@ -39,15 +38,15 @@ export const postVenta = async (dispatch: AppDispatch, requestVentas: string, ve
   return fetchData(url.toString(), dispatch, options);
 };
 
-export const updateTodoStatus = async (dispatch: AppDispatch, requestUrl: string, id: number,) => {
-  const url = `${requestUrl}/${id}`;
+
+export const putVenta = async (dispatch: AppDispatch, requestUrl: string, requestBody: { vehiculoId: number, clienteId: number, precioVenta: number }) => {
+  const url = `${requestUrl}`;
   const options: RequestInit = {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ id: id, title: title, isComplete: !isComplete })
+    body: JSON.stringify(requestBody)
   };
   return fetchData(url, dispatch, options);
 };
-

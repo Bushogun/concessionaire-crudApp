@@ -1,12 +1,18 @@
 import React from 'react';
 import { useAppSelector } from '../../redux/hooks';
-import { VentasItem } from '../ventas-item';
+import VentasItem from '../ventas-item';
 import './VentasList.css';
 import { IVentasValue } from '../../interfaces/i-ventas';
 
 export const VentasList = () => {
   const ventas = useAppSelector(state => state.ventasReducer.ventas);
-  console.log(ventas);
+  const searchQuery = useAppSelector(state => state.ventasReducer.query);
+
+  const filteredVentas = searchQuery
+    ? ventas.filter(venta =>
+      venta.cliente && venta.cliente.nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    : ventas;
 
 
   return (
@@ -16,8 +22,9 @@ export const VentasList = () => {
           <table>
             <thead>
               <tr>
+                <th className={`ventas-title-text`}>Id Cliente</th>
                 <th className={`ventas-title-text`}>Cliente</th>
-                <th className={`ventas-title-text`}>Concesionario</th>
+                <th className={`ventas-title-text`}>Id Vehiculo</th>
                 <th className={`ventas-title-text`}>Vehículo</th>
                 <th className={`ventas-title-text`}>Fecha</th>
                 <th className={`ventas-title-text`}>Valor</th>
@@ -25,11 +32,8 @@ export const VentasList = () => {
               </tr>
             </thead>
             <tbody>
-              {ventas.map((venta: IVentasValue) => (
-                <VentasItem
-                  key={venta.$id}
-                  data={venta}
-                />
+              {filteredVentas.map((venta: IVentasValue, index: number) => (
+                <VentasItem key={venta.$id ?? index} data={venta} />
               ))}
             </tbody>
           </table>

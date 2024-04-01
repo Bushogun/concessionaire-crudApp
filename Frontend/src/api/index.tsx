@@ -1,2 +1,2 @@
-export const API_KEY = 'https://localhost:7258'
+export const API_KEY = 'https://localhost:44341'
 export const OPERATIONS_VENTAS = '/api/Ventas'
